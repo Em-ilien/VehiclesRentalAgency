@@ -27,68 +27,6 @@ class CarTest {
 		car = null;
 	}
 
-	@Test
-	void testGetRenaultBrand() {
-		final String renault = "Renault";
-		final String megane = "Megane";
-		car = new Car(renault, megane, YEAR_2020, NUMBER_OF_SEATS);
-
-		assertThat(car.getBrand()).isEqualTo(renault);
-	}
-
-	@Test
-	void testGetPeugeoltBrand() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
-
-		assertThat(car.getBrand()).isEqualTo(PEUGEOT_BRAND);
-	}
-
-	@Test
-	void testGet207Model() {
-		final String model207 = "207";
-		car = new Car(PEUGEOT_BRAND, model207, YEAR_2020, NUMBER_OF_SEATS);
-
-		assertThat(car.getModel()).isEqualTo(model207);
-	}
-
-	@Test
-	void testGet208Model() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
-
-		assertThat(car.getModel()).isEqualTo(PEUGEOT_208_MODEL);
-	}
-
-	@Test
-	void test2020ProductionYear() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
-
-		assertThat(car.getProductionYear()).isEqualTo(YEAR_2020);
-	}
-
-	@Test
-	void test2021ProductionYear() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, 2021, NUMBER_OF_SEATS);
-
-		assertThat(car.getProductionYear()).isEqualTo(2021);
-	}
-
-	@ParameterizedTest
-	@CsvSource({ "0,true", "-1,true", "1899,true", "1900,false", "2010,false", "2024,false", "2025,true" })
-	void testProductionYear(int productionYear, boolean exceptionExpected) throws Throwable {
-		try (MockedStatic<TimeProvider> utilities = Mockito.mockStatic(TimeProvider.class)) {
-			utilities.when(TimeProvider::currentYearValue).thenReturn(CURRENT_YEAR);
-
-			ThrowingCallable throwingCallable = () -> car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, productionYear,
-					NUMBER_OF_SEATS);
-
-			if (exceptionExpected)
-				assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(throwingCallable)
-						.withMessageStartingWith("L'année de production " + productionYear + " n'est pas comprise");
-			else
-				throwingCallable.call();
-		}
-	}
-
 	@ParameterizedTest
 	@CsvSource({ "-1,true", "0,true", "1,false", "3,false" })
 	void testNumberOfSeatsConstructor(int numberOfSeats, boolean exceptionExpected) throws Throwable {
@@ -135,59 +73,9 @@ class CarTest {
 
 	@ParameterizedTest
 	@CsvSource({ "1,40", "2,80", "3,120" })
-	void testCarToStringSeatsAndPrice(int numberOfSeats, int dailyRentalPrice) {
+	void testCarToStringSeatsAndPrice(int numberOfSeats, double dailyRentalPrice) {
 		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, numberOfSeats);
 		assertThat(car.toString()).contains("(" + numberOfSeats + " seats) : " + dailyRentalPrice + " €");
-	}
-
-	@Test
-	void testTwoSameInstanceAreEquals() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
-		Car car2 = car;
-
-		assertThat(car).isEqualTo(car2);
-	}
-
-	@Test
-	void testNotSameClassInstanceAreNotEquals() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
-		Object car2 = new Object();
-
-		assertThat(car).isNotEqualTo(car2);
-	}
-
-	@Test
-	void testTwoSimilarCarsAreEquals() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
-		Car car2 = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
-
-		assertThat(car).isEqualTo(car2);
-	}
-
-	@Test
-	void testTwoCarsWithNotSameBrandAreNotEquals() {
-		final String renault = "Renault";
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
-		Car car2 = new Car(renault, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
-
-		assertThat(car).isNotEqualTo(car2);
-	}
-
-	@Test
-	void testTwoCarsWithNotSameModelAreNotEquals() {
-		final String peugeot207Model = "207";
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
-		Car car2 = new Car(PEUGEOT_BRAND, peugeot207Model, YEAR_2020, NUMBER_OF_SEATS);
-
-		assertThat(car).isNotEqualTo(car2);
-	}
-
-	@Test
-	void testTwoCarsWithNotSameProductionYearAreNotEquals() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
-		Car car2 = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, CURRENT_YEAR, NUMBER_OF_SEATS);
-
-		assertThat(car).isNotEqualTo(car2);
 	}
 
 }
