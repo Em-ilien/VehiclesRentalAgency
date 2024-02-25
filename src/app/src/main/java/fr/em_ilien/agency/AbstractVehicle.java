@@ -47,7 +47,7 @@ public abstract class AbstractVehicle {
 
 	protected abstract String toStringDetails();
 
-	protected String separateWithSpaces(String... sub) {
+	private String separateWithSpaces(String... sub) {
 		final StringBuilder stb = new StringBuilder();
 		for (String string : sub)
 			stb.append(" " + string);

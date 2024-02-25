@@ -20,56 +20,56 @@ class AbstractVehicleTest {
 	private static final int YEAR_2020 = 2020;
 	private static final int NUMBER_OF_SEATS = 1;
 
-	Car car;
+	AbstractVehicle vehicle;
 
 	@AfterEach
 	void tearDown() throws Exception {
-		car = null;
+		vehicle = null;
 	}
 
 	@Test
 	void testGetRenaultBrand() {
 		final String renault = "Renault";
 		final String megane = "Megane";
-		car = new Car(renault, megane, YEAR_2020, NUMBER_OF_SEATS);
+		vehicle = new Car(renault, megane, YEAR_2020, NUMBER_OF_SEATS);
 
-		assertThat(car.getBrand()).isEqualTo(renault);
+		assertThat(vehicle.getBrand()).isEqualTo(renault);
 	}
 
 	@Test
 	void testGetPeugeoltBrand() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
+		vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
 
-		assertThat(car.getBrand()).isEqualTo(PEUGEOT_BRAND);
+		assertThat(vehicle.getBrand()).isEqualTo(PEUGEOT_BRAND);
 	}
 
 	@Test
 	void testGet207Model() {
 		final String model207 = "207";
-		car = new Car(PEUGEOT_BRAND, model207, YEAR_2020, NUMBER_OF_SEATS);
+		vehicle = new Car(PEUGEOT_BRAND, model207, YEAR_2020, NUMBER_OF_SEATS);
 
-		assertThat(car.getModel()).isEqualTo(model207);
+		assertThat(vehicle.getModel()).isEqualTo(model207);
 	}
 
 	@Test
 	void testGet208Model() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
+		vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
 
-		assertThat(car.getModel()).isEqualTo(PEUGEOT_208_MODEL);
+		assertThat(vehicle.getModel()).isEqualTo(PEUGEOT_208_MODEL);
 	}
 
 	@Test
 	void test2020ProductionYear() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
+		vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
 
-		assertThat(car.getProductionYear()).isEqualTo(YEAR_2020);
+		assertThat(vehicle.getProductionYear()).isEqualTo(YEAR_2020);
 	}
 
 	@Test
 	void test2021ProductionYear() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, 2021, NUMBER_OF_SEATS);
+		vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, 2021, NUMBER_OF_SEATS);
 
-		assertThat(car.getProductionYear()).isEqualTo(2021);
+		assertThat(vehicle.getProductionYear()).isEqualTo(2021);
 	}
 
 	@ParameterizedTest
@@ -78,7 +78,7 @@ class AbstractVehicleTest {
 		try (MockedStatic<TimeProvider> utilities = Mockito.mockStatic(TimeProvider.class)) {
 			utilities.when(TimeProvider::currentYearValue).thenReturn(CURRENT_YEAR);
 
-			ThrowingCallable throwingCallable = () -> car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, productionYear,
+			ThrowingCallable throwingCallable = () -> vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, productionYear,
 					NUMBER_OF_SEATS);
 
 			if (exceptionExpected)
@@ -91,52 +91,52 @@ class AbstractVehicleTest {
 
 	@Test
 	void testTwoSameInstanceAreEquals() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
-		Car car2 = car;
+		vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
+		AbstractVehicle vehicle2 = vehicle;
 
-		assertThat(car).isEqualTo(car2);
+		assertThat(vehicle).isEqualTo(vehicle2);
 	}
 
 	@Test
 	void testNotSameClassInstanceAreNotEquals() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
+		vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
 		Object car2 = new Object();
 
-		assertThat(car).isNotEqualTo(car2);
+		assertThat(vehicle).isNotEqualTo(car2);
 	}
 
 	@Test
 	void testTwoSimilarCarsAreEquals() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
+		vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
 		Car car2 = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
 
-		assertThat(car).isEqualTo(car2);
+		assertThat(vehicle).isEqualTo(car2);
 	}
 
 	@Test
 	void testTwoCarsWithNotSameBrandAreNotEquals() {
 		final String renault = "Renault";
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
+		vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
 		Car car2 = new Car(renault, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
 
-		assertThat(car).isNotEqualTo(car2);
+		assertThat(vehicle).isNotEqualTo(car2);
 	}
 
 	@Test
 	void testTwoCarsWithNotSameModelAreNotEquals() {
 		final String peugeot207Model = "207";
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
+		vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
 		Car car2 = new Car(PEUGEOT_BRAND, peugeot207Model, YEAR_2020, NUMBER_OF_SEATS);
 
-		assertThat(car).isNotEqualTo(car2);
+		assertThat(vehicle).isNotEqualTo(car2);
 	}
 
 	@Test
 	void testTwoCarsWithNotSameProductionYearAreNotEquals() {
-		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
+		vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
 		Car car2 = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, CURRENT_YEAR, NUMBER_OF_SEATS);
 
-		assertThat(car).isNotEqualTo(car2);
+		assertThat(vehicle).isNotEqualTo(car2);
 	}
 
 }
