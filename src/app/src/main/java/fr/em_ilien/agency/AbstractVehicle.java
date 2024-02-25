@@ -2,7 +2,7 @@ package fr.em_ilien.agency;
 
 import fr.em_ilien.util.TimeProvider;
 
-public abstract class AbstractVehicle {
+public abstract class AbstractVehicle implements Vehicle {
 	private static final int MINIMAL_PRODUCTION_YEAR_VEHICLE = 1900;
 
 	protected int productionYear;
@@ -30,7 +30,7 @@ public abstract class AbstractVehicle {
 		return productionYear;
 	}
 
-	public Object getBrand() {
+	public String getBrand() {
 		return brand;
 	}
 

@@ -9,26 +9,26 @@ import fr.em_ilien.agency.exceptions.UnknownVehicleException;
 
 public class RentalAgency {
 
-	private Set<AbstractVehicle> vehicles;
+	private Set<Vehicle> vehicles;
 
-	public RentalAgency(AbstractVehicle... vehicles) {
-		this.vehicles = new HashSet<AbstractVehicle>(List.of(vehicles));
+	public RentalAgency(Vehicle... vehicles) {
+		this.vehicles = new HashSet<Vehicle>(List.of(vehicles));
 	}
 
-	public List<AbstractVehicle> getVehicles() {
-		return new ArrayList<AbstractVehicle>(vehicles);
+	public List<Vehicle> getVehicles() {
+		return new ArrayList<Vehicle>(vehicles);
 	}
 
-	public boolean add(AbstractVehicle vehicle) {
+	public boolean add(Vehicle vehicle) {
 		return vehicles.add(vehicle);
 	}
 
-	public void remove(AbstractVehicle vehicle) {
+	public void remove(Vehicle vehicle) {
 		if (!vehicles.remove(vehicle))
 			throw new UnknownVehicleException();
 	}
 
-	public boolean contains(AbstractVehicle vehicle) {
+	public boolean contains(Vehicle vehicle) {
 		return vehicles.contains(vehicle);
 	}
 

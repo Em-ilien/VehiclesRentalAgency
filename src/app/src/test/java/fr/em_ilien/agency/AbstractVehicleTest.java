@@ -20,7 +20,7 @@ class AbstractVehicleTest {
 	private static final int YEAR_2020 = 2020;
 	private static final int NUMBER_OF_SEATS = 1;
 
-	AbstractVehicle vehicle;
+	Vehicle vehicle;
 
 	@AfterEach
 	void tearDown() throws Exception {
@@ -92,7 +92,7 @@ class AbstractVehicleTest {
 	@Test
 	void testTwoSameInstanceAreEquals() {
 		vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
-		AbstractVehicle vehicle2 = vehicle;
+		Vehicle vehicle2 = vehicle;
 
 		assertThat(vehicle).isEqualTo(vehicle2);
 	}

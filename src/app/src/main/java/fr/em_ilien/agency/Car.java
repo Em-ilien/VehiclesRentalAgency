@@ -2,7 +2,7 @@ package fr.em_ilien.agency;
 
 import fr.em_ilien.util.TimeProvider;
 
-public class Car extends AbstractVehicle {
+public class Car extends AbstractVehicle implements Vehicle {
 	private static final int PRICE_PER_SEAT = 20;
 	private static final int MAX_CAR_AGE_STILL_CONSIDERED_NEW = 5;
 	private static final int MINIMAL_NUMBER_OF_SEATS = 1;

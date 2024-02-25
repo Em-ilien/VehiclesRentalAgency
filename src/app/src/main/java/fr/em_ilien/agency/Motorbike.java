@@ -1,6 +1,6 @@
 package fr.em_ilien.agency;
 
-public class Motorbike extends AbstractVehicle {
+public class Motorbike extends AbstractVehicle implements Vehicle{
 
 	private static final double PRICE_PER_CM3_OF_CYLINDREE = 0.25;
 	private static final int MIN_ALLOWED_CYLINDREE = 50;
