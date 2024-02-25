@@ -7,5 +7,7 @@ public interface Vehicle {
 	String getModel();
 
 	int getProductionYear();
+	
+	public double dailyRentalPrice();
 
 }

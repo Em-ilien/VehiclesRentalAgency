@@ -78,8 +78,8 @@ class AbstractVehicleTest {
 		try (MockedStatic<TimeProvider> utilities = Mockito.mockStatic(TimeProvider.class)) {
 			utilities.when(TimeProvider::currentYearValue).thenReturn(CURRENT_YEAR);
 
-			ThrowingCallable throwingCallable = () -> vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, productionYear,
-					NUMBER_OF_SEATS);
+			ThrowingCallable throwingCallable = () -> vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL,
+					productionYear, NUMBER_OF_SEATS);
 
 			if (exceptionExpected)
 				assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(throwingCallable)
@@ -137,6 +137,19 @@ class AbstractVehicleTest {
 		Car car2 = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, CURRENT_YEAR, NUMBER_OF_SEATS);
 
 		assertThat(vehicle).isNotEqualTo(car2);
+	}
+
+	@Test
+	void testFillANullBrandShouldNotWork() {
+		ThrowingCallable throwingCallable = () -> vehicle = new Car(null, PEUGEOT_208_MODEL, YEAR_2020,
+				NUMBER_OF_SEATS);
+		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(throwingCallable);
+	}
+
+	@Test
+	void testFillANullModelShouldNotWork() {
+		ThrowingCallable throwingCallable = () -> vehicle = new Car(PEUGEOT_BRAND, null, YEAR_2020, NUMBER_OF_SEATS);
+		assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(throwingCallable);
 	}
 
 }

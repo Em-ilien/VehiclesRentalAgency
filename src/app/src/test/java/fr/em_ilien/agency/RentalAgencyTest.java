@@ -3,11 +3,17 @@ package fr.em_ilien.agency;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.util.List;
+
 import org.assertj.core.api.ThrowableAssert.ThrowingCallable;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import fr.em_ilien.agency.criterion.BrandCriterion;
+import fr.em_ilien.agency.criterion.MaxPriceCriterion;
 import fr.em_ilien.agency.exceptions.UnknownVehicleException;
 
 class RentalAgencyTest {
@@ -23,15 +29,20 @@ class RentalAgencyTest {
 	private static final Motorbike MOTORBIKE = new Motorbike(BRAND, MOTORBIKE_MODEL, PRODUCTION_YEAR,
 			MOTORBIKE_CYLINDREE);
 
+	private final PrintStream standardOut = System.out;
+	private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
+
 	private RentalAgency rentalAgency;
 
 	@BeforeEach
 	void setUp() throws Exception {
+		System.setOut(new PrintStream(outputStreamCaptor));
 	}
 
 	@AfterEach
 	void tearDown() throws Exception {
 		rentalAgency = null;
+		System.setOut(standardOut);
 	}
 
 	@Test
@@ -116,6 +127,35 @@ class RentalAgencyTest {
 		rentalAgency = new RentalAgency(CAR);
 		assertThat(rentalAgency.contains(CAR)).isTrue();
 		assertThat(rentalAgency.contains(MOTORBIKE)).isFalse();
+	}
+
+	@Test
+	void testSelectBrandCriterionWorks() {
+		final Car renaultCar = new Car("Renault", CAR_MODEL, PRODUCTION_YEAR, CAR_NUMBER_OF_SEATS);
+		rentalAgency = new RentalAgency(CAR, MOTORBIKE, renaultCar);
+		BrandCriterion brandCriterion = new BrandCriterion(BRAND);
+		List<Vehicle> filteredVehicles = rentalAgency.select(brandCriterion);
+
+		assertThat(filteredVehicles).isNotEmpty().contains(CAR).hasSize(2).contains(MOTORBIKE)
+				.doesNotContain(renaultCar);
+		rentalAgency.printSelectedVehicles(brandCriterion);
+		assertThat(outputStreamCaptor.toString()).contains(CAR.toString()).contains(MOTORBIKE.toString())
+				.doesNotContain(renaultCar.toString());
+	}
+
+	@Test
+	void testSelectMaxPriceCriterionWorks() {
+		final Car expensiveCar = new Car(BRAND + "1", CAR_MODEL, PRODUCTION_YEAR, CAR_NUMBER_OF_SEATS + 10);
+		rentalAgency = new RentalAgency(CAR, MOTORBIKE, expensiveCar);
+		MaxPriceCriterion maxPriceCriterion = new MaxPriceCriterion(CAR.dailyRentalPrice());
+		List<Vehicle> filteredVehicles = rentalAgency.select(maxPriceCriterion);
+
+		assertThat(filteredVehicles).isNotEmpty().hasSize(2).contains(CAR).contains(MOTORBIKE)
+				.doesNotContain(expensiveCar);
+		rentalAgency.printSelectedVehicles(maxPriceCriterion);
+		assertThat(outputStreamCaptor.toString()).contains(CAR.toString()).contains(MOTORBIKE.toString())
+				.doesNotContain(expensiveCar.toString());
+
 	}
 
 }

@@ -10,11 +10,22 @@ public abstract class AbstractVehicle implements Vehicle {
 	protected String model;
 
 	public AbstractVehicle(String brand, String model, int productionYear) {
-		super();
+		checkFilledBrandIsCorrect(brand);
+		checkFilledModelIsCorrect(model);
 		checkFilledProductionYearIsCorrect(productionYear);
 		this.brand = brand;
 		this.model = model;
 		this.productionYear = productionYear;
+	}
+
+	private void checkFilledModelIsCorrect(String model) {
+		if (model == null)
+			throw new IllegalArgumentException("Le modèle ne peut pas être nul.");
+	}
+
+	private void checkFilledBrandIsCorrect(String brand) {
+		if (brand == null)
+			throw new IllegalArgumentException("La marque ne peut pas être nulle.");
 	}
 
 	protected void checkFilledProductionYearIsCorrect(int productionYear) {
@@ -43,7 +54,7 @@ public abstract class AbstractVehicle implements Vehicle {
 				"(" + toStringDetails() + ")", ":", String.valueOf(dailyRentalPrice()), "€");
 	}
 
-	protected abstract double dailyRentalPrice();
+	public abstract double dailyRentalPrice();
 
 	protected abstract String toStringDetails();
 
