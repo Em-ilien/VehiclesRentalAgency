@@ -18,6 +18,8 @@ import fr.em_ilien.agency.exceptions.UnknownVehicleException;
 
 class RentalAgencyTest {
 
+	private static final Customer CUSTOMER2 = new Customer("Josie", "Cosson", 1950);
+	private static final Customer CUSTOMER = new Customer("Emilien", "Cosson", 2003);
 	private static final String BRAND = "Peugeot";
 	private static final int PRODUCTION_YEAR = 2020;
 	private static final int CAR_NUMBER_OF_SEATS = 5;
@@ -155,7 +157,70 @@ class RentalAgencyTest {
 		rentalAgency.printSelectedVehicles(maxPriceCriterion);
 		assertThat(outputStreamCaptor.toString()).contains(CAR.toString()).contains(MOTORBIKE.toString())
 				.doesNotContain(expensiveCar.toString());
+	}
 
+	@Test
+	void testRentACar() {
+		final double expectedPrice = CAR.dailyRentalPrice();
+		rentalAgency = new RentalAgency(CAR);
+
+		assertThat(rentalAgency.aVehicleIsRentedBy(CUSTOMER)).isFalse();
+		assertThat(rentalAgency.vehicleIsRented(CAR)).isFalse();
+
+		assertThat(rentalAgency.rentVehicle(CUSTOMER, CAR)).isEqualTo(expectedPrice);
+
+		assertThat(rentalAgency.aVehicleIsRentedBy(CUSTOMER)).isTrue();
+		assertThat(rentalAgency.vehicleIsRented(CAR)).isTrue();
+
+		rentalAgency.returnVehicle(CUSTOMER);
+
+		assertThat(rentalAgency.aVehicleIsRentedBy(CUSTOMER)).isFalse();
+		assertThat(rentalAgency.vehicleIsRented(CAR)).isFalse();
+	}
+
+	@Test
+	void testRentUnknowVehicle() {
+		rentalAgency = new RentalAgency(MOTORBIKE);
+
+		ThrowingCallable throwingCallable = () -> rentalAgency.rentVehicle(CUSTOMER, CAR);
+		assertThatExceptionOfType(UnknownVehicleException.class).isThrownBy(throwingCallable);
+	}
+
+	@Test
+	void testCustomerRentTwoVehicles() {
+		rentalAgency = new RentalAgency(CAR, MOTORBIKE);
+
+		rentalAgency.rentVehicle(CUSTOMER, CAR);
+		ThrowingCallable throwingCallable = () -> rentalAgency.rentVehicle(CUSTOMER, MOTORBIKE);
+		assertThatExceptionOfType(IllegalStateException.class).isThrownBy(throwingCallable);
+	}
+
+	@Test
+	void testToRentTwoTimesTheSameVehicles() {
+		rentalAgency = new RentalAgency(CAR);
+
+		rentalAgency.rentVehicle(CUSTOMER, CAR);
+		ThrowingCallable throwingCallable = () -> rentalAgency.rentVehicle(CUSTOMER2, CAR);
+		assertThatExceptionOfType(IllegalStateException.class).isThrownBy(throwingCallable);
+	}
+
+	@Test
+	void testItDoesNothingIfReturnANotRentedVehicle() {
+		rentalAgency = new RentalAgency(CAR);
+		rentalAgency.returnVehicle(CUSTOMER);
+		rentalAgency.returnVehicle(CUSTOMER);
+	}
+
+	@Test
+	void testAllRentedVehicles() {
+		rentalAgency = new RentalAgency(CAR, MOTORBIKE);
+		assertThat(rentalAgency.allRentedVehicles()).isEmpty();
+		
+		rentalAgency.rentVehicle(CUSTOMER, CAR);
+		assertThat(rentalAgency.allRentedVehicles()).hasSize(1).contains(CAR).doesNotContain(MOTORBIKE);
+		
+		rentalAgency.rentVehicle(CUSTOMER2, MOTORBIKE);
+		assertThat(rentalAgency.allRentedVehicles()).hasSize(2).contains(CAR).contains(MOTORBIKE);
 	}
 
 }
