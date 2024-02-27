@@ -7,7 +7,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.function.IntPredicate;
 import java.util.function.Predicate;
 
 import fr.em_ilien.agency.exceptions.UnknownVehicleException;
@@ -30,9 +29,9 @@ public class RentalAgency {
 		return vehicles.add(vehicle);
 	}
 
-	public void remove(Vehicle vehicle) {
+	public void remove(Vehicle vehicle) throws UnknownVehicleException {
 		if (!vehicles.remove(vehicle))
-			throw new UnknownVehicleException();
+			throw new UnknownVehicleException(vehicle);
 	}
 
 	public boolean contains(Vehicle vehicle) {
@@ -48,9 +47,9 @@ public class RentalAgency {
 			System.out.println(vehicle);
 	}
 
-	public double rentVehicle(Customer customer, Vehicle vehicle) {
+	public double rentVehicle(Customer customer, Vehicle vehicle) throws UnknownVehicleException {
 		if (!vehicles.contains(vehicle))
-			throw new UnknownVehicleException();
+			throw new UnknownVehicleException(null);
 		if (rentedVehicles.containsKey(customer))
 			throw new IllegalStateException();
 		if (rentedVehicles.containsValue(vehicle))

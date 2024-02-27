@@ -68,7 +68,7 @@ class CarTest {
 		car = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
 		final String space = " ";
 		assertThat(car.toString()).startsWith(
-				"Car" + space + PEUGEOT_BRAND + space + PEUGEOT_208_MODEL + space + YEAR_2020 + space + "(");
+				"Car" + space + PEUGEOT_BRAND + space + PEUGEOT_208_MODEL + space + YEAR_2020 + space + "(").endsWith(") : " + car.dailyRentalPrice() + " €");
 	}
 
 	@ParameterizedTest

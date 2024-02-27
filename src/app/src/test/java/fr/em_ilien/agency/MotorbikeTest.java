@@ -14,7 +14,7 @@ import org.mockito.Mockito;
 import fr.em_ilien.util.TimeProvider;
 
 class MotorbikeTest {
-	private static final int CYLINDREE = 50;
+	private static final int CYLINDER_CAPACITY = 50;
 	private static final int CURRENT_YEAR = 2024;
 	private static final int YEAR_2020 = 2020;
 	private static final String XP400GT_MODEL = "XP400 GT";
@@ -34,7 +34,7 @@ class MotorbikeTest {
 			utilities.when(TimeProvider::currentYearValue).thenReturn(CURRENT_YEAR);
 
 			ThrowingCallable throwingCallable = () -> motorbike = new Motorbike(PEUGEOT_BRAND, XP400GT_MODEL,
-					productionYear, CYLINDREE);
+					productionYear, CYLINDER_CAPACITY);
 
 			if (exceptionExpected)
 				assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(throwingCallable)
@@ -46,50 +46,52 @@ class MotorbikeTest {
 
 	@ParameterizedTest
 	@CsvSource({ "-1,true", "49,true", "50,false", "52,false" })
-	void testCylyndreeConstructor(int cylindree, boolean exceptionExpected) throws Throwable {
+	void testCylinderCapacityConstructor(int cylinderCapcity, boolean exceptionExpected) throws Throwable {
 		ThrowingCallable throwingCallable = () -> motorbike = new Motorbike(PEUGEOT_BRAND, XP400GT_MODEL, YEAR_2020,
-				cylindree);
+				cylinderCapcity);
 
 		if (exceptionExpected)
 			assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(throwingCallable)
-					.withMessageStartingWith("La cylyndrée " + cylindree + " n'est pas supérieure ou égale");
+					.withMessageStartingWith("La cylindrée " + cylinderCapcity + " n'est pas supérieure ou égale");
 		else
 			throwingCallable.call();
 	}
 
 	@Test
-	void testGet50cm3Cylindree() {
-		motorbike = new Motorbike(PEUGEOT_BRAND, XP400GT_MODEL, YEAR_2020, CYLINDREE);
-		assertThat(motorbike.getCylindree()).isEqualTo(CYLINDREE);
+	void testGet50cm3CylinderCapcity() {
+		motorbike = new Motorbike(PEUGEOT_BRAND, XP400GT_MODEL, YEAR_2020, CYLINDER_CAPACITY);
+		assertThat(motorbike.getCylinderCapacity()).isEqualTo(CYLINDER_CAPACITY);
 	}
 
 	@Test
-	void testGet150cm3Cylindree() {
-		final int cylyndre150cm3 = 150;
-		motorbike = new Motorbike(PEUGEOT_BRAND, XP400GT_MODEL, YEAR_2020, cylyndre150cm3);
-		assertThat(motorbike.getCylindree()).isEqualTo(cylyndre150cm3);
+	void testGet150cm3CylinderCapacity() {
+		final int cylinder150cm3 = 150;
+		motorbike = new Motorbike(PEUGEOT_BRAND, XP400GT_MODEL, YEAR_2020, cylinder150cm3);
+		assertThat(motorbike.getCylinderCapacity()).isEqualTo(cylinder150cm3);
 	}
 
 	@ParameterizedTest
 	@CsvSource({ "50,12.5", "150,37.5" })
-	void testMotorbikeDailyRentalPrice(int cylindree, double expectedPrice) {
-		motorbike = new Motorbike(PEUGEOT_BRAND, XP400GT_MODEL, YEAR_2020, cylindree);
+	void testMotorbikeDailyRentalPrice(int cylinderCapacity, double expectedPrice) {
+		motorbike = new Motorbike(PEUGEOT_BRAND, XP400GT_MODEL, YEAR_2020, cylinderCapacity);
 		assertThat(motorbike.dailyRentalPrice()).isEqualTo(expectedPrice);
 	}
 
 	@Test
 	void testMotorbikeToString() {
-		motorbike = new Motorbike(PEUGEOT_BRAND, XP400GT_MODEL, YEAR_2020, CYLINDREE);
+		motorbike = new Motorbike(PEUGEOT_BRAND, XP400GT_MODEL, YEAR_2020, CYLINDER_CAPACITY);
 		final String space = " ";
-		assertThat(motorbike.toString()).startsWith(
-				"Motorbike" + space + PEUGEOT_BRAND + space + XP400GT_MODEL + space + YEAR_2020 + space + "(");
+		assertThat(motorbike.toString())
+				.startsWith(
+						"Motorbike" + space + PEUGEOT_BRAND + space + XP400GT_MODEL + space + YEAR_2020 + space + "(")
+				.endsWith(") : " + motorbike.dailyRentalPrice() + " €");
 	}
 
 	@ParameterizedTest
 	@CsvSource({ "50,12.5", "150,37.5" })
-	void testMotorbikeToStringCylyndreeAndPrice(int cylindree, double dailyRentalPrice) {
-		motorbike = new Motorbike(PEUGEOT_BRAND, XP400GT_MODEL, YEAR_2020, cylindree);
-		assertThat(motorbike.toString()).contains("(" + cylindree + "cm³) : " + dailyRentalPrice + " €");
+	void testMotorbikeToStringCylinderCapacityAndPrice(int cylinderCapacity, double dailyRentalPrice) {
+		motorbike = new Motorbike(PEUGEOT_BRAND, XP400GT_MODEL, YEAR_2020, cylinderCapacity);
+		assertThat(motorbike.toString()).contains("(" + cylinderCapacity + "cm³) : " + dailyRentalPrice + " €");
 	}
 
 }

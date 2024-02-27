@@ -100,9 +100,9 @@ class AbstractVehicleTest {
 	@Test
 	void testNotSameClassInstanceAreNotEquals() {
 		vehicle = new Car(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, NUMBER_OF_SEATS);
-		Object car2 = new Object();
+		Motorbike motorbike = new Motorbike(PEUGEOT_BRAND, PEUGEOT_208_MODEL, YEAR_2020, 50);
 
-		assertThat(vehicle).isNotEqualTo(car2);
+		assertThat(vehicle).isNotEqualTo(motorbike);
 	}
 
 	@Test

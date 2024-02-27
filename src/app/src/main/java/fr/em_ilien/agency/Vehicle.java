@@ -2,12 +2,16 @@ package fr.em_ilien.agency;
 
 public interface Vehicle {
 
-	String getBrand();
+	public String getBrand();
 
-	String getModel();
+	public String getModel();
 
-	int getProductionYear();
+	public int getProductionYear();
 	
 	public double dailyRentalPrice();
+	
+	public boolean equals(Object obj);
+	
+	public String toString();
 
 }

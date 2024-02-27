@@ -25,11 +25,11 @@ class RentalAgencyTest {
 	private static final int CAR_NUMBER_OF_SEATS = 5;
 	private static final String CAR_MODEL = "208";
 	private static final String MOTORBIKE_MODEL = "XP400 GT";
-	private static final int MOTORBIKE_CYLINDREE = 50;
+	private static final int MOTORBIKE_CYLINDER_CAPACITY = 50;
 
 	private static final Car CAR = new Car(BRAND, CAR_MODEL, PRODUCTION_YEAR, CAR_NUMBER_OF_SEATS);
 	private static final Motorbike MOTORBIKE = new Motorbike(BRAND, MOTORBIKE_MODEL, PRODUCTION_YEAR,
-			MOTORBIKE_CYLINDREE);
+			MOTORBIKE_CYLINDER_CAPACITY);
 
 	private final PrintStream standardOut = System.out;
 	private final ByteArrayOutputStream outputStreamCaptor = new ByteArrayOutputStream();
@@ -100,7 +100,7 @@ class RentalAgencyTest {
 	}
 
 	@Test
-	void testRemoveVehicleShouldWork() {
+	void testRemoveVehicleShouldWork() throws UnknownVehicleException {
 		rentalAgency = new RentalAgency(CAR);
 		rentalAgency.remove(CAR);
 		assertThat(rentalAgency.getVehicles()).doesNotContain(CAR).isEmpty();
@@ -111,11 +111,12 @@ class RentalAgencyTest {
 		rentalAgency = new RentalAgency();
 
 		ThrowingCallable throwingCallable = () -> rentalAgency.remove(CAR);
-		assertThatExceptionOfType(UnknownVehicleException.class).isThrownBy(throwingCallable);
+		assertThatExceptionOfType(UnknownVehicleException.class).isThrownBy(throwingCallable)
+				.withMessageStartingWith(CAR + " n'existe pas dans l'agence.").isInstanceOf(RuntimeException.class);
 	}
 
 	@Test
-	void testRemoveTwoTimeSameVegicleShouldNotWork() {
+	void testRemoveTwoTimeSameVegicleShouldNotWork() throws UnknownVehicleException {
 		rentalAgency = new RentalAgency(CAR);
 
 		ThrowingCallable throwingCallable = () -> rentalAgency.remove(CAR);
@@ -160,7 +161,7 @@ class RentalAgencyTest {
 	}
 
 	@Test
-	void testRentACar() {
+	void testRentACar() throws UnknownVehicleException {
 		final double expectedPrice = CAR.dailyRentalPrice();
 		rentalAgency = new RentalAgency(CAR);
 
@@ -187,7 +188,7 @@ class RentalAgencyTest {
 	}
 
 	@Test
-	void testCustomerRentTwoVehicles() {
+	void testCustomerRentTwoVehicles() throws UnknownVehicleException {
 		rentalAgency = new RentalAgency(CAR, MOTORBIKE);
 
 		rentalAgency.rentVehicle(CUSTOMER, CAR);
@@ -196,7 +197,7 @@ class RentalAgencyTest {
 	}
 
 	@Test
-	void testToRentTwoTimesTheSameVehicles() {
+	void testToRentTwoTimesTheSameVehicles() throws UnknownVehicleException {
 		rentalAgency = new RentalAgency(CAR);
 
 		rentalAgency.rentVehicle(CUSTOMER, CAR);
@@ -212,13 +213,13 @@ class RentalAgencyTest {
 	}
 
 	@Test
-	void testAllRentedVehicles() {
+	void testAllRentedVehicles() throws UnknownVehicleException {
 		rentalAgency = new RentalAgency(CAR, MOTORBIKE);
 		assertThat(rentalAgency.allRentedVehicles()).isEmpty();
-		
+
 		rentalAgency.rentVehicle(CUSTOMER, CAR);
 		assertThat(rentalAgency.allRentedVehicles()).hasSize(1).contains(CAR).doesNotContain(MOTORBIKE);
-		
+
 		rentalAgency.rentVehicle(CUSTOMER2, MOTORBIKE);
 		assertThat(rentalAgency.allRentedVehicles()).hasSize(2).contains(CAR).contains(MOTORBIKE);
 	}

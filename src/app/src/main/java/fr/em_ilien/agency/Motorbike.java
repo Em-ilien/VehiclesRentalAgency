@@ -1,35 +1,35 @@
 package fr.em_ilien.agency;
 
-public class Motorbike extends AbstractVehicle implements Vehicle{
+public class Motorbike extends AbstractVehicle implements Vehicle {
 
-	private static final double PRICE_PER_CM3_OF_CYLINDREE = 0.25;
-	private static final int MIN_ALLOWED_CYLINDREE = 50;
+	private static final double PRICE_PER_CM3_OF_CYLINDER_CAPACITY = 0.25;
+	private static final int MIN_ALLOWED_CYLINDER_CAPACITY = 50;
 
-	private int cylindree;
+	private int cylinderCapacity;
 
-	public Motorbike(String brand, String model, int productionYear, int cylindree) {
+	public Motorbike(String brand, String model, int productionYear, int cylinderCapacity) {
 		super(brand, model, productionYear);
-		checkFilledCylyndreeIsCorrect(cylindree);
+		checkFilledCylinderCapacityIsCorrect(cylinderCapacity);
 
-		this.cylindree = cylindree;
+		this.cylinderCapacity = cylinderCapacity;
 	}
 
-	private void checkFilledCylyndreeIsCorrect(int cylindree) {
-		if (cylindree < MIN_ALLOWED_CYLINDREE)
-			throw new IllegalArgumentException(
-					"La cylyndrée " + cylindree + " n'est pas supérieure ou égale à " + MIN_ALLOWED_CYLINDREE);
+	private void checkFilledCylinderCapacityIsCorrect(int cylinderCapacity) {
+		if (cylinderCapacity < MIN_ALLOWED_CYLINDER_CAPACITY)
+			throw new IllegalArgumentException("La cylindrée " + cylinderCapacity + " n'est pas supérieure ou égale à "
+					+ MIN_ALLOWED_CYLINDER_CAPACITY);
 	}
 
-	public int getCylindree() {
-		return cylindree;
+	public int getCylinderCapacity() {
+		return cylinderCapacity;
 	}
 
 	public double dailyRentalPrice() {
-		return PRICE_PER_CM3_OF_CYLINDREE * cylindree;
+		return PRICE_PER_CM3_OF_CYLINDER_CAPACITY * cylinderCapacity;
 	}
 
 	protected String toStringDetails() {
-		return cylindree + "cm³";
+		return cylinderCapacity + "cm³";
 	}
 
 }
