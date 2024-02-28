@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>RentalAgency.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">fr.em_ilien.agency</a> &gt; <span class="el_source">RentalAgency.java</span></div><h1>RentalAgency.java</h1><pre class="source lang-java linenums">package fr.em_ilien.agency;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.function.Predicate;
+
+import fr.em_ilien.agency.exceptions.UnknownVehicleException;
+
+public class RentalAgency {
+
+	private Set&lt;Vehicle&gt; vehicles;
+	private Map&lt;Customer, Vehicle&gt; rentedVehicles;
+
+<span class="fc" id="L20">	public RentalAgency(Vehicle... vehicles) {</span>
+<span class="fc" id="L21">		this.vehicles = new HashSet&lt;Vehicle&gt;(List.of(vehicles));</span>
+<span class="fc" id="L22">		this.rentedVehicles = new HashMap&lt;Customer, Vehicle&gt;();</span>
+<span class="fc" id="L23">	}</span>
+
+	public List&lt;Vehicle&gt; getVehicles() {
+<span class="fc" id="L26">		return new ArrayList&lt;Vehicle&gt;(vehicles);</span>
+	}
+
+	public boolean add(Vehicle vehicle) {
+<span class="fc" id="L30">		return vehicles.add(vehicle);</span>
+	}
+
+	public void remove(Vehicle vehicle) throws UnknownVehicleException {
+<span class="fc bfc" id="L34" title="All 2 branches covered.">		if (!vehicles.remove(vehicle))</span>
+<span class="fc" id="L35">			throw new UnknownVehicleException(vehicle);</span>
+<span class="fc" id="L36">	}</span>
+
+	public boolean contains(Vehicle vehicle) {
+<span class="fc" id="L39">		return vehicles.contains(vehicle);</span>
+	}
+
+	public List&lt;Vehicle&gt; select(Predicate&lt;Vehicle&gt; criterion) {
+<span class="fc" id="L43">		return vehicles.stream().filter(criterion).toList();</span>
+	}
+
+	public void printSelectedVehicles(Predicate&lt;Vehicle&gt; criterion) {
+<span class="fc bfc" id="L47" title="All 2 branches covered.">		for (Vehicle vehicle : select(criterion))</span>
+<span class="fc" id="L48">			System.out.println(vehicle);</span>
+<span class="fc" id="L49">	}</span>
+
+	public double rentVehicle(Customer customer, Vehicle vehicle)
+			throws UnknownVehicleException, IllegalStateException {
+<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (!vehicles.contains(vehicle))</span>
+<span class="fc" id="L54">			throw new UnknownVehicleException(vehicle);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (aVehicleIsRentedBy(customer))</span>
+<span class="fc" id="L56">			throw new IllegalStateException(customer + &quot; is already renting &quot; + rentedVehicles.get(customer) + &quot;.&quot;);</span>
+<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (vehicleIsRented(vehicle))</span>
+<span class="fc" id="L58">			throw new IllegalStateException(vehicle + &quot; is already rented by &quot; + getRenterOf(vehicle) + &quot;.&quot;);</span>
+
+<span class="fc" id="L60">		rentedVehicles.put(customer, vehicle);</span>
+<span class="fc" id="L61">		return vehicle.dailyRentalPrice();</span>
+	}
+
+	private Customer getRenterOf(Vehicle vehicle) {
+<span class="fc" id="L65">		return rentedVehicles.entrySet().stream().filter(entry -&gt; Objects.equals(entry.getValue(), vehicle))</span>
+<span class="fc" id="L66">				.map(Map.Entry::getKey).findFirst().orElse(null);</span>
+	}
+
+	public boolean aVehicleIsRentedBy(Customer customer) {
+<span class="fc" id="L70">		return rentedVehicles.containsKey(customer);</span>
+	}
+
+	public boolean vehicleIsRented(Vehicle vehicle) {
+<span class="fc" id="L74">		return rentedVehicles.containsValue(vehicle);</span>
+	}
+
+	public void returnVehicle(Customer customer) {
+<span class="fc" id="L78">		rentedVehicles.remove(customer);</span>
+<span class="fc" id="L79">	}</span>
+
+	public Collection&lt;Vehicle&gt; allRentedVehicles() {
+<span class="fc" id="L82">		return rentedVehicles.values();</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

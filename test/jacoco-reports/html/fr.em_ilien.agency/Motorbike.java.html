@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="fr"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Motorbike.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">app</a> &gt; <a href="index.source.html" class="el_package">fr.em_ilien.agency</a> &gt; <span class="el_source">Motorbike.java</span></div><h1>Motorbike.java</h1><pre class="source lang-java linenums">package fr.em_ilien.agency;
+
+public class Motorbike extends AbstractVehicle implements Vehicle {
+
+	private static final double PRICE_PER_CM3_OF_CYLINDER_CAPACITY = 0.25;
+	private static final int MIN_ALLOWED_CYLINDER_CAPACITY = 50;
+
+	private int cylinderCapacity;
+
+	public Motorbike(String brand, String model, int productionYear, int cylinderCapacity) {
+<span class="fc" id="L11">		super(brand, model, productionYear);</span>
+<span class="fc" id="L12">		checkFilledCylinderCapacityIsCorrect(cylinderCapacity);</span>
+
+<span class="fc" id="L14">		this.cylinderCapacity = cylinderCapacity;</span>
+<span class="fc" id="L15">	}</span>
+
+	private void checkFilledCylinderCapacityIsCorrect(int cylinderCapacity) {
+<span class="fc bfc" id="L18" title="All 2 branches covered.">		if (cylinderCapacity &lt; MIN_ALLOWED_CYLINDER_CAPACITY)</span>
+<span class="fc" id="L19">			throw new IllegalArgumentException(&quot;The cylinder capacity &quot; + cylinderCapacity</span>
+					+ &quot; isn't greater than or equal to &quot; + MIN_ALLOWED_CYLINDER_CAPACITY);
+<span class="fc" id="L21">	}</span>
+
+	public int getCylinderCapacity() {
+<span class="fc" id="L24">		return cylinderCapacity;</span>
+	}
+
+	public double dailyRentalPrice() {
+<span class="fc" id="L28">		return PRICE_PER_CM3_OF_CYLINDER_CAPACITY * cylinderCapacity;</span>
+	}
+
+	protected String toStringDetails() {
+<span class="fc" id="L32">		return cylinderCapacity + &quot;cmÂ³&quot;;</span>
+	}
+
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
