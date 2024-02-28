@@ -17,5 +17,10 @@ class TimeProviderTest {
 	void testCurrentYearValue() {
 		assertThat(TimeProvider.currentYearValue()).isEqualTo(Calendar.getInstance().get(Calendar.YEAR));
 	}
+	
+	@Test
+	void testConstructClass() {
+		new TimeProvider();
+	}
 
 }
