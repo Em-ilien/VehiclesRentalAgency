@@ -35,7 +35,7 @@ class CarTest {
 
 		if (exceptionExpected)
 			assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(throwingCallable)
-					.withMessageStartingWith("Le nombre de siège " + numberOfSeats + " n'est pas supérieur ou égal");
+					.withMessageStartingWith("The number of seats " + numberOfSeats + " isn't greater than or equal to ");
 		else
 			throwingCallable.call();
 	}

@@ -18,7 +18,7 @@ public class Car extends AbstractVehicle implements Vehicle {
 
 	private void checkFilledNumberOfSeatIsCorrect(int numberOfSeats) {
 		if (numberOfSeats < MINIMAL_NUMBER_OF_SEATS)
-			throw new IllegalArgumentException("Le nombre de siège " + numberOfSeats + " n'est pas supérieur ou égal à "
+			throw new IllegalArgumentException("The number of seats " + numberOfSeats + " isn't greater than or equal to "
 					+ MINIMAL_NUMBER_OF_SEATS + ".");
 	}
 

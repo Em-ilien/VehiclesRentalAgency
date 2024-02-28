@@ -38,7 +38,7 @@ class MotorbikeTest {
 
 			if (exceptionExpected)
 				assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(throwingCallable)
-						.withMessageStartingWith("L'année de production " + productionYear + " n'est pas comprise");
+						.withMessageStartingWith("The production year " + productionYear + " isn't included in ");
 			else
 				throwingCallable.call();
 		}
@@ -52,7 +52,7 @@ class MotorbikeTest {
 
 		if (exceptionExpected)
 			assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(throwingCallable)
-					.withMessageStartingWith("La cylindrée " + cylinderCapcity + " n'est pas supérieure ou égale");
+					.withMessageStartingWith("The cylinder capacity " + cylinderCapcity + " isn't greater than or equal to ");
 		else
 			throwingCallable.call();
 	}

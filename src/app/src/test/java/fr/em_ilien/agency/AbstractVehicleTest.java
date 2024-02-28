@@ -83,7 +83,7 @@ class AbstractVehicleTest {
 
 			if (exceptionExpected)
 				assertThatExceptionOfType(IllegalArgumentException.class).isThrownBy(throwingCallable)
-						.withMessageStartingWith("L'année de production " + productionYear + " n'est pas comprise");
+						.withMessageStartingWith("The production year " + productionYear + " isn't included in ");
 			else
 				throwingCallable.call();
 		}

@@ -16,8 +16,8 @@ public class Motorbike extends AbstractVehicle implements Vehicle {
 
 	private void checkFilledCylinderCapacityIsCorrect(int cylinderCapacity) {
 		if (cylinderCapacity < MIN_ALLOWED_CYLINDER_CAPACITY)
-			throw new IllegalArgumentException("La cylindrée " + cylinderCapacity + " n'est pas supérieure ou égale à "
-					+ MIN_ALLOWED_CYLINDER_CAPACITY);
+			throw new IllegalArgumentException("The cylinder capacity " + cylinderCapacity
+					+ " isn't greater than or equal to " + MIN_ALLOWED_CYLINDER_CAPACITY);
 	}
 
 	public int getCylinderCapacity() {

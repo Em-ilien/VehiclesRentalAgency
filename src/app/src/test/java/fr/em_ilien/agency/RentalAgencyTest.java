@@ -18,8 +18,11 @@ import fr.em_ilien.agency.exceptions.UnknownVehicleException;
 
 class RentalAgencyTest {
 
-	private static final Customer CUSTOMER2 = new Customer("Josie", "Cosson", 1950);
-	private static final Customer CUSTOMER = new Customer("Emilien", "Cosson", 2003);
+	private static final int CUSTOMER_BIRTHDAY = 2003;
+	private static final String CUSTOMER_LASTNAME = "Cosson";
+	private static final String CUSTOMER_FIRSTNAME = "Emilien";
+	private static final Customer CUSTOMER = new Customer(CUSTOMER_FIRSTNAME, CUSTOMER_LASTNAME, CUSTOMER_BIRTHDAY);
+	private static final Customer CUSTOMER2 = new Customer("Josie", CUSTOMER_LASTNAME, 1950);
 	private static final String BRAND = "Peugeot";
 	private static final int PRODUCTION_YEAR = 2020;
 	private static final int CAR_NUMBER_OF_SEATS = 5;
@@ -112,7 +115,7 @@ class RentalAgencyTest {
 
 		ThrowingCallable throwingCallable = () -> rentalAgency.remove(CAR);
 		assertThatExceptionOfType(UnknownVehicleException.class).isThrownBy(throwingCallable)
-				.withMessageStartingWith(CAR + " n'existe pas dans l'agence.").isInstanceOf(RuntimeException.class);
+				.withMessageStartingWith(CAR + " doesn't exist on the rental agency.").isInstanceOf(RuntimeException.class);
 	}
 
 	@Test
@@ -130,6 +133,17 @@ class RentalAgencyTest {
 		rentalAgency = new RentalAgency(CAR);
 		assertThat(rentalAgency.contains(CAR)).isTrue();
 		assertThat(rentalAgency.contains(MOTORBIKE)).isFalse();
+	}
+
+	@Test
+	void testContainesMethodAfterAddingAndRemovingVehicle() {
+		rentalAgency = new RentalAgency();
+		assertThat(rentalAgency.contains(CAR)).isFalse();
+		rentalAgency.add(CAR);
+		assertThat(rentalAgency.contains(CAR)).isTrue();
+		rentalAgency.remove(CAR);
+		assertThat(rentalAgency.contains(CAR)).isFalse();
+
 	}
 
 	@Test
@@ -184,7 +198,8 @@ class RentalAgencyTest {
 		rentalAgency = new RentalAgency(MOTORBIKE);
 
 		ThrowingCallable throwingCallable = () -> rentalAgency.rentVehicle(CUSTOMER, CAR);
-		assertThatExceptionOfType(UnknownVehicleException.class).isThrownBy(throwingCallable);
+		assertThatExceptionOfType(UnknownVehicleException.class).isThrownBy(throwingCallable)
+				.withMessageContaining(CAR.toString());
 	}
 
 	@Test
@@ -193,16 +208,18 @@ class RentalAgencyTest {
 
 		rentalAgency.rentVehicle(CUSTOMER, CAR);
 		ThrowingCallable throwingCallable = () -> rentalAgency.rentVehicle(CUSTOMER, MOTORBIKE);
-		assertThatExceptionOfType(IllegalStateException.class).isThrownBy(throwingCallable);
+		assertThatExceptionOfType(IllegalStateException.class).isThrownBy(throwingCallable).withMessage(
+				CUSTOMER_FIRSTNAME + " " + CUSTOMER_LASTNAME.toUpperCase() + " is already renting " + CAR + ".");
 	}
 
 	@Test
-	void testToRentTwoTimesTheSameVehicles() throws UnknownVehicleException {
+	void testToRentTwoTimesTheSameVehicle() throws UnknownVehicleException {
 		rentalAgency = new RentalAgency(CAR);
 
 		rentalAgency.rentVehicle(CUSTOMER, CAR);
 		ThrowingCallable throwingCallable = () -> rentalAgency.rentVehicle(CUSTOMER2, CAR);
-		assertThatExceptionOfType(IllegalStateException.class).isThrownBy(throwingCallable);
+		assertThatExceptionOfType(IllegalStateException.class).isThrownBy(throwingCallable)
+				.withMessage(CAR + " is already rented by " + CUSTOMER + ".");
 	}
 
 	@Test

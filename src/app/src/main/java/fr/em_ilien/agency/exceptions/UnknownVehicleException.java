@@ -14,6 +14,6 @@ public class UnknownVehicleException extends RuntimeException {
 
 	@Override
 	public String getMessage() {
-		return vehicle + " n'existe pas dans l'agence.";
+		return vehicle + " doesn't exist on the rental agency.";
 	}
 }

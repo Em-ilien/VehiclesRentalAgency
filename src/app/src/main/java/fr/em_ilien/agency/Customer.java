@@ -2,8 +2,31 @@ package fr.em_ilien.agency;
 
 public class Customer {
 
-	public Customer(String string, String string2, int i) {
-		// TODO Auto-generated constructor stub
+	private int birthdayYear;
+	private String lastname;
+	private String firstname;
+
+	public Customer(String firstname, String lastname, int birthdayYear) {
+		this.firstname = firstname;
+		this.lastname = lastname.toUpperCase();
+		this.birthdayYear = birthdayYear;
 	}
 
+	public String getFirstname() {
+		return firstname;
+	}
+
+	public String getLastname() {
+		return lastname;
+	}
+
+	public int getBirthday() {
+		return birthdayYear;
+	}
+
+	
+	@Override
+	public String toString() {
+		return firstname + " " + lastname.toUpperCase();
+	}
 }

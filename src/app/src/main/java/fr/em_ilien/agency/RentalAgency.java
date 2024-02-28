@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -47,16 +48,22 @@ public class RentalAgency {
 			System.out.println(vehicle);
 	}
 
-	public double rentVehicle(Customer customer, Vehicle vehicle) throws UnknownVehicleException {
+	public double rentVehicle(Customer customer, Vehicle vehicle)
+			throws UnknownVehicleException, IllegalStateException {
 		if (!vehicles.contains(vehicle))
-			throw new UnknownVehicleException(null);
-		if (rentedVehicles.containsKey(customer))
-			throw new IllegalStateException();
-		if (rentedVehicles.containsValue(vehicle))
-			throw new IllegalStateException();
+			throw new UnknownVehicleException(vehicle);
+		if (aVehicleIsRentedBy(customer))
+			throw new IllegalStateException(customer + " is already renting " + rentedVehicles.get(customer) + ".");
+		if (vehicleIsRented(vehicle))
+			throw new IllegalStateException(vehicle + " is already rented by " + getRenterOf(vehicle) + ".");
 
 		rentedVehicles.put(customer, vehicle);
 		return vehicle.dailyRentalPrice();
+	}
+
+	private Customer getRenterOf(Vehicle vehicle) {
+		return rentedVehicles.entrySet().stream().filter(entry -> Objects.equals(entry.getValue(), vehicle))
+				.map(Map.Entry::getKey).findFirst().orElse(null);
 	}
 
 	public boolean aVehicleIsRentedBy(Customer customer) {

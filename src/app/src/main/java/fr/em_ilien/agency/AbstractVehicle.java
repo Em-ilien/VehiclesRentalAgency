@@ -20,21 +20,20 @@ public abstract class AbstractVehicle implements Vehicle {
 
 	private void checkFilledModelIsCorrect(String model) {
 		if (model == null)
-			throw new IllegalArgumentException("Le modèle ne peut pas être nul.");
+			throw new IllegalArgumentException("The model cannot be null.");
 	}
 
 	private void checkFilledBrandIsCorrect(String brand) {
 		if (brand == null)
-			throw new IllegalArgumentException("La marque ne peut pas être nulle.");
+			throw new IllegalArgumentException("The brand connot be null.");
 	}
 
 	protected void checkFilledProductionYearIsCorrect(int productionYear) {
 		final int currentYear = TimeProvider.currentYearValue();
 
 		if (productionYear < MINIMAL_PRODUCTION_YEAR_VEHICLE || productionYear > currentYear)
-			throw new IllegalArgumentException(
-					"L'année de production " + productionYear + " n'est pas comprise entre l'intervalle [["
-							+ MINIMAL_PRODUCTION_YEAR_VEHICLE + ";" + currentYear + "]].");
+			throw new IllegalArgumentException("The production year " + productionYear + " isn't included in [["
+					+ MINIMAL_PRODUCTION_YEAR_VEHICLE + ";" + currentYear + "]].");
 	}
 
 	public int getProductionYear() {
