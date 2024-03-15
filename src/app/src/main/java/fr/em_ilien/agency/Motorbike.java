@@ -7,6 +7,14 @@ public class Motorbike extends AbstractVehicle implements Vehicle {
 
 	private int cylinderCapacity;
 
+	/**
+	 * Create a new Motorbike
+	 * 
+	 * @param brand            the brand of the motorbike
+	 * @param model            the model of the motorbike
+	 * @param productionYear   the production year of the motorbike
+	 * @param cylinderCapacity the cylinder capacity of the motorbike
+	 */
 	public Motorbike(String brand, String model, int productionYear, int cylinderCapacity) {
 		super(brand, model, productionYear);
 		checkFilledCylinderCapacityIsCorrect(cylinderCapacity);
@@ -20,10 +28,15 @@ public class Motorbike extends AbstractVehicle implements Vehicle {
 					+ " isn't greater than or equal to " + MIN_ALLOWED_CYLINDER_CAPACITY);
 	}
 
+	/**
+	 * 
+	 * @return the cylinder capacity
+	 */
 	public int getCylinderCapacity() {
 		return cylinderCapacity;
 	}
 
+	@Override
 	public double dailyRentalPrice() {
 		return PRICE_PER_CM3_OF_CYLINDER_CAPACITY * cylinderCapacity;
 	}

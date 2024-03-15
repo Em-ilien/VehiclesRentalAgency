@@ -8,6 +8,10 @@ public class MaxPriceCriterion implements Predicate<Vehicle> {
 
 	private double dailyRentalPrice;
 
+	/**
+	 * Create a filter on daily rental price
+	 * @param dailyRentalPrice
+	 */
 	public MaxPriceCriterion(double dailyRentalPrice) {
 		this.dailyRentalPrice = dailyRentalPrice;
 	}

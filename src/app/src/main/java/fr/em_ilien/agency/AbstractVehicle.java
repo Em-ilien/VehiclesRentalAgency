@@ -28,7 +28,7 @@ public abstract class AbstractVehicle implements Vehicle {
 			throw new IllegalArgumentException("The brand connot be null.");
 	}
 
-	protected void checkFilledProductionYearIsCorrect(int productionYear) {
+	private void checkFilledProductionYearIsCorrect(int productionYear) {
 		final int currentYear = TimeProvider.currentYearValue();
 
 		if (productionYear < MINIMAL_PRODUCTION_YEAR_VEHICLE || productionYear > currentYear)
@@ -36,23 +36,28 @@ public abstract class AbstractVehicle implements Vehicle {
 					+ MINIMAL_PRODUCTION_YEAR_VEHICLE + ";" + currentYear + "]].");
 	}
 
+	@Override
 	public int getProductionYear() {
 		return productionYear;
 	}
 
+	@Override
 	public String getBrand() {
 		return brand;
 	}
 
+	@Override
 	public String getModel() {
 		return model;
 	}
 
+	@Override
 	public String toString() {
 		return separateWithSpaces(this.getClass().getSimpleName(), brand, model, String.valueOf(productionYear),
 				"(" + toStringDetails() + ")", ":", String.valueOf(dailyRentalPrice()), "€");
 	}
 
+	@Override
 	public abstract double dailyRentalPrice();
 
 	protected abstract String toStringDetails();

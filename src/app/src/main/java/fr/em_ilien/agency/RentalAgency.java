@@ -17,37 +17,85 @@ public class RentalAgency {
 	private Set<Vehicle> vehicles;
 	private Map<Customer, Vehicle> rentedVehicles;
 
+	/**
+	 * Create the rental agency with the passed vehicles if they are
+	 * 
+	 * @param vehicles a list of vehicles
+	 */
 	public RentalAgency(Vehicle... vehicles) {
 		this.vehicles = new HashSet<Vehicle>(List.of(vehicles));
 		this.rentedVehicles = new HashMap<Customer, Vehicle>();
 	}
 
-	public List<Vehicle> getVehicles() {
-		return new ArrayList<Vehicle>(vehicles);
+	/**
+	 * 
+	 * @return a copy if the vehicles
+	 */
+	public Set<Vehicle> getVehicles() {
+		return new HashSet<Vehicle>(vehicles);
 	}
 
+	/**
+	 * Add the vehicle to the rental agency
+	 * 
+	 * @param vehicle the vehicle added
+	 * @return true if the operation succeed.
+	 */
 	public boolean add(Vehicle vehicle) {
 		return vehicles.add(vehicle);
 	}
 
+	/**
+	 * Remove the vehicle from the rental agency
+	 * 
+	 * @param vehicle the removed vehicle
+	 * @throws UnknownVehicleException if the vehicle doesn't exist on the rental
+	 *                                 agency
+	 */
 	public void remove(Vehicle vehicle) throws UnknownVehicleException {
 		if (!vehicles.remove(vehicle))
 			throw new UnknownVehicleException(vehicle);
 	}
 
+	/**
+	 * 
+	 * @param vehicle
+	 * @return true only if the vehicle exists on the rentalAgency
+	 */
 	public boolean contains(Vehicle vehicle) {
 		return vehicles.contains(vehicle);
 	}
 
+	/**
+	 * Filter the rental agency's vehicles
+	 * 
+	 * @param criterion the filter criterion
+	 * @return the matching set of vehicles
+	 */
 	public List<Vehicle> select(Predicate<Vehicle> criterion) {
 		return vehicles.stream().filter(criterion).toList();
 	}
 
+	/**
+	 * Show the rental agency's vehicle matching the filter criterion
+	 */
 	public void printSelectedVehicles(Predicate<Vehicle> criterion) {
 		for (Vehicle vehicle : select(criterion))
 			System.out.println(vehicle);
 	}
 
+	/**
+	 * Rent a vehicle existing on the rental agency to a customer
+	 * 
+	 * @param customer the customer renter
+	 * @param vehicle  the vehicle rented
+	 * @return the daily rental price
+	 * @throws UnknownVehicleException if the vehicle is not existing on the rental
+	 *                                 agency
+	 * @throws IllegalStateException   if the vehicle is already rented or if the
+	 *                                 customer is already renting an another
+	 *                                 vehicle
+	 */
 	public double rentVehicle(Customer customer, Vehicle vehicle)
 			throws UnknownVehicleException, IllegalStateException {
 		if (!vehicles.contains(vehicle))
@@ -66,10 +114,20 @@ public class RentalAgency {
 				.map(Map.Entry::getKey).findFirst().orElse(null);
 	}
 
+	/**
+	 * 
+	 * @param customer
+	 * @return true only if the customer is currently renting a vehicle
+	 */
 	public boolean aVehicleIsRentedBy(Customer customer) {
 		return rentedVehicles.containsKey(customer);
 	}
 
+	/**
+	 * 
+	 * @param vehicle
+	 * @return true only if the vehicle is currently rented
+	 */
 	public boolean vehicleIsRented(Vehicle vehicle) {
 		return rentedVehicles.containsValue(vehicle);
 	}
@@ -78,6 +136,10 @@ public class RentalAgency {
 		rentedVehicles.remove(customer);
 	}
 
+	/**
+	 * 
+	 * @return the collection of the rental agency's rented vehicles
+	 */
 	public Collection<Vehicle> allRentedVehicles() {
 		return rentedVehicles.values();
 	}

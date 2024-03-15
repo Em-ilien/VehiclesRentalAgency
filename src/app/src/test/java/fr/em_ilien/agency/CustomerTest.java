@@ -41,8 +41,8 @@ class CustomerTest {
 
 	@Test
 	void testBirthday() {
-		assertThat(CUSTOMER1.getBirthday()).isEqualTo(CUSTOMER1_BIRTHDAY);
-		assertThat(CUSTOMER2.getBirthday()).isEqualTo(CUSTOMER2_BIRTHDAY);
+		assertThat(CUSTOMER1.getBirthdayYear()).isEqualTo(CUSTOMER1_BIRTHDAY);
+		assertThat(CUSTOMER2.getBirthdayYear()).isEqualTo(CUSTOMER2_BIRTHDAY);
 	}
 
 	@Test
