@@ -22,8 +22,8 @@ Emilien Cosson
 
     .
     ├── .github/workflows/gradle.yml    # GitHub Action
-    ├── docs                    		# Compte-rendu
-    ├── src                    			# Projet Java
-    ├── test                    		# Rapports de tests Jacoco
+    ├── docs                            # Compte-rendu
+    ├── src                             # Projet Java
+    ├── test                            # Rapports de tests Jacoco
     ├── LICENSE.md
     └── README.md
