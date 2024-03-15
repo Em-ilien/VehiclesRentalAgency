@@ -8,15 +8,20 @@ public class BrandCriterion implements Predicate&lt;Vehicle&gt; {
 
 	private String brand;
 
-<span class="fc" id="L11">	public BrandCriterion(String brand) {</span>
-<span class="fc bfc" id="L12" title="All 2 branches covered.">		if (brand == null)</span>
-<span class="fc" id="L13">			throw new IllegalArgumentException();</span>
-<span class="fc" id="L14">		this.brand = brand;</span>
-<span class="fc" id="L15">	}</span>
+	/**
+	 * Create a filter on brand
+	 * @param brand
+	 */
+<span class="fc" id="L15">	public BrandCriterion(String brand) {</span>
+<span class="fc bfc" id="L16" title="All 2 branches covered.">		if (brand == null)</span>
+<span class="fc" id="L17">			throw new IllegalArgumentException();</span>
+<span class="fc" id="L18">		this.brand = brand;</span>
+<span class="fc" id="L19">	}</span>
 
+	
 	@Override
 	public boolean test(Vehicle t) {
-<span class="fc" id="L19">		return t.getBrand().equals(brand);</span>
+<span class="fc" id="L24">		return t.getBrand().equals(brand);</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -21,8 +21,9 @@ Emilien Cosson
 ## Structure
 
     .
-    ├── docs                    # Compte-rendu
-    ├── src                     # Projet Java
-    ├── test                    # Rapports de tests Jacoco
+    ├── .github/workflows/gradle.yml   # GitHub Action
+    ├── docs                    		# Compte-rendu
+    ├── src                    			# Projet Java
+    ├── test                    		# Rapports de tests Jacoco
     ├── LICENSE.md
     └── README.md

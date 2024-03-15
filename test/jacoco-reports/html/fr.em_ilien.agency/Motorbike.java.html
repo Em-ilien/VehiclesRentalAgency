@@ -7,29 +7,42 @@ public class Motorbike extends AbstractVehicle implements Vehicle {
 
 	private int cylinderCapacity;
 
+	/**
+	 * Create a new Motorbike
+	 * 
+	 * @param brand            the brand of the motorbike
+	 * @param model            the model of the motorbike
+	 * @param productionYear   the production year of the motorbike
+	 * @param cylinderCapacity the cylinder capacity of the motorbike
+	 */
 	public Motorbike(String brand, String model, int productionYear, int cylinderCapacity) {
-<span class="fc" id="L11">		super(brand, model, productionYear);</span>
-<span class="fc" id="L12">		checkFilledCylinderCapacityIsCorrect(cylinderCapacity);</span>
+<span class="fc" id="L19">		super(brand, model, productionYear);</span>
+<span class="fc" id="L20">		checkFilledCylinderCapacityIsCorrect(cylinderCapacity);</span>
 
-<span class="fc" id="L14">		this.cylinderCapacity = cylinderCapacity;</span>
-<span class="fc" id="L15">	}</span>
+<span class="fc" id="L22">		this.cylinderCapacity = cylinderCapacity;</span>
+<span class="fc" id="L23">	}</span>
 
 	private void checkFilledCylinderCapacityIsCorrect(int cylinderCapacity) {
-<span class="fc bfc" id="L18" title="All 2 branches covered.">		if (cylinderCapacity &lt; MIN_ALLOWED_CYLINDER_CAPACITY)</span>
-<span class="fc" id="L19">			throw new IllegalArgumentException(&quot;The cylinder capacity &quot; + cylinderCapacity</span>
+<span class="fc bfc" id="L26" title="All 2 branches covered.">		if (cylinderCapacity &lt; MIN_ALLOWED_CYLINDER_CAPACITY)</span>
+<span class="fc" id="L27">			throw new IllegalArgumentException(&quot;The cylinder capacity &quot; + cylinderCapacity</span>
 					+ &quot; isn't greater than or equal to &quot; + MIN_ALLOWED_CYLINDER_CAPACITY);
-<span class="fc" id="L21">	}</span>
+<span class="fc" id="L29">	}</span>
 
+	/**
+	 * 
+	 * @return the cylinder capacity
+	 */
 	public int getCylinderCapacity() {
-<span class="fc" id="L24">		return cylinderCapacity;</span>
+<span class="fc" id="L36">		return cylinderCapacity;</span>
 	}
 
+	@Override
 	public double dailyRentalPrice() {
-<span class="fc" id="L28">		return PRICE_PER_CM3_OF_CYLINDER_CAPACITY * cylinderCapacity;</span>
+<span class="fc" id="L41">		return PRICE_PER_CM3_OF_CYLINDER_CAPACITY * cylinderCapacity;</span>
 	}
 
 	protected String toStringDetails() {
-<span class="fc" id="L32">		return cylinderCapacity + &quot;cmÂ³&quot;;</span>
+<span class="fc" id="L45">		return cylinderCapacity + &quot;cmÂ³&quot;;</span>
 	}
 
 }
