@@ -6,28 +6,46 @@ public class Customer {
 	private String lastname;
 	private String firstname;
 
-<span class="fc" id="L9">	public Customer(String firstname, String lastname, int birthdayYear) {</span>
-<span class="fc" id="L10">		this.firstname = firstname;</span>
-<span class="fc" id="L11">		this.lastname = lastname.toUpperCase();</span>
-<span class="fc" id="L12">		this.birthdayYear = birthdayYear;</span>
-<span class="fc" id="L13">	}</span>
+	/**
+	 * Create a new customer
+	 * 
+	 * @param firstname    the firstname
+	 * @param lastname     the lastname
+	 * @param birthdayYear the birthday year
+	 */
+<span class="fc" id="L16">	public Customer(String firstname, String lastname, int birthdayYear) {</span>
+<span class="fc" id="L17">		this.firstname = firstname;</span>
+<span class="fc" id="L18">		this.lastname = lastname.toUpperCase();</span>
+<span class="fc" id="L19">		this.birthdayYear = birthdayYear;</span>
+<span class="fc" id="L20">	}</span>
 
+	/**
+	 * 
+	 * @return the customer's firstname
+	 */
 	public String getFirstname() {
-<span class="fc" id="L16">		return firstname;</span>
+<span class="fc" id="L27">		return firstname;</span>
 	}
 
+	/**
+	 * 
+	 * @return the customer's lastname
+	 */
 	public String getLastname() {
-<span class="fc" id="L20">		return lastname;</span>
+<span class="fc" id="L35">		return lastname;</span>
 	}
 
-	public int getBirthday() {
-<span class="fc" id="L24">		return birthdayYear;</span>
+	/**
+	 * 
+	 * @return the customer's birthdayYear
+	 */
+	public int getBirthdayYear() {
+<span class="fc" id="L43">		return birthdayYear;</span>
 	}
 
-	
 	@Override
 	public String toString() {
-<span class="fc" id="L30">		return firstname + &quot; &quot; + lastname.toUpperCase();</span>
+<span class="fc" id="L48">		return firstname + &quot; &quot; + lastname.toUpperCase();</span>
 	}
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

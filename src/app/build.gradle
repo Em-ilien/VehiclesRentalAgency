@@ -79,3 +79,13 @@ test {
 
 check.dependsOn test
 
+task testUtil(type: Test) {
+    useJUnitPlatform()
+    include 'fr.em_ilien.util.*'
+}
+
+task testAgency(type: Test) {
+    useJUnitPlatform()
+    include 'fr.em_ilien.agency.*'
+}
+

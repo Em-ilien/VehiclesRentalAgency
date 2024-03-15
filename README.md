@@ -1,7 +1,7 @@
 # VehiclesRentalAgency
 
 Projet d'une agence de location de véhicules fictive qui permet à ses clients de choisir la voiture qu’ils souhaitent louer en fonction de différents critères.
-L’agence dispose de deux types de véhicules : des motos et des voitures (cars).
+L’agence dispose de deux types de véhicules : des motos et des voitures.
 
 ## Stack et outils
 
@@ -10,7 +10,7 @@ L’agence dispose de deux types de véhicules : des motos et des voitures (cars
 - JUnit 5 (tests unitaires)
 - AssertJ (bibliothèque d'assertions)
 - Mockito (tests doubles)
-- Jacoco (rapports de tests)
+- JaCoCo (rapports de tests)
 
 ## Licence
 
@@ -21,8 +21,9 @@ Emilien Cosson
 ## Structure
 
     .
-    ├── docs                    # Compte-rendu
-    ├── src                     # Projet Java
-    ├── test                    # Rapports de tests Jacoco
+    ├── .github/workflows/gradle.yml    # GitHub Action
+    ├── docs                    		# Compte-rendu
+    ├── src                    			# Projet Java
+    ├── test                    		# Rapports de tests Jacoco
     ├── LICENSE.md
     └── README.md

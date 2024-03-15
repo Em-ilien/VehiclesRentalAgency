@@ -17,69 +17,131 @@ public class RentalAgency {
 	private Set&lt;Vehicle&gt; vehicles;
 	private Map&lt;Customer, Vehicle&gt; rentedVehicles;
 
-<span class="fc" id="L20">	public RentalAgency(Vehicle... vehicles) {</span>
-<span class="fc" id="L21">		this.vehicles = new HashSet&lt;Vehicle&gt;(List.of(vehicles));</span>
-<span class="fc" id="L22">		this.rentedVehicles = new HashMap&lt;Customer, Vehicle&gt;();</span>
-<span class="fc" id="L23">	}</span>
+	/**
+	 * Create the rental agency with the passed vehicles if they are
+	 * 
+	 * @param vehicles a list of vehicles
+	 */
+<span class="fc" id="L25">	public RentalAgency(Vehicle... vehicles) {</span>
+<span class="fc" id="L26">		this.vehicles = new HashSet&lt;Vehicle&gt;(List.of(vehicles));</span>
+<span class="fc" id="L27">		this.rentedVehicles = new HashMap&lt;Customer, Vehicle&gt;();</span>
+<span class="fc" id="L28">	}</span>
 
-	public List&lt;Vehicle&gt; getVehicles() {
-<span class="fc" id="L26">		return new ArrayList&lt;Vehicle&gt;(vehicles);</span>
+	/**
+	 * 
+	 * @return a copy if the vehicles
+	 */
+	public Set&lt;Vehicle&gt; getVehicles() {
+<span class="fc" id="L35">		return new HashSet&lt;Vehicle&gt;(vehicles);</span>
 	}
 
+	/**
+	 * Add the vehicle to the rental agency
+	 * 
+	 * @param vehicle the vehicle added
+	 * @return true if the operation succeed.
+	 */
 	public boolean add(Vehicle vehicle) {
-<span class="fc" id="L30">		return vehicles.add(vehicle);</span>
+<span class="fc" id="L45">		return vehicles.add(vehicle);</span>
 	}
 
+	/**
+	 * Remove the vehicle from the rental agency
+	 * 
+	 * @param vehicle the removed vehicle
+	 * @throws UnknownVehicleException if the vehicle doesn't exist on the rental
+	 *                                 agency
+	 */
 	public void remove(Vehicle vehicle) throws UnknownVehicleException {
-<span class="fc bfc" id="L34" title="All 2 branches covered.">		if (!vehicles.remove(vehicle))</span>
-<span class="fc" id="L35">			throw new UnknownVehicleException(vehicle);</span>
-<span class="fc" id="L36">	}</span>
+<span class="fc bfc" id="L56" title="All 2 branches covered.">		if (!vehicles.remove(vehicle))</span>
+<span class="fc" id="L57">			throw new UnknownVehicleException(vehicle);</span>
+<span class="fc" id="L58">	}</span>
 
+	/**
+	 * 
+	 * @param vehicle
+	 * @return true only if the vehicle exists on the rentalAgency
+	 */
 	public boolean contains(Vehicle vehicle) {
-<span class="fc" id="L39">		return vehicles.contains(vehicle);</span>
+<span class="fc" id="L66">		return vehicles.contains(vehicle);</span>
 	}
 
+	/**
+	 * Filter the rental agency's vehicles
+	 * 
+	 * @param criterion the filter criterion
+	 * @return the matching set of vehicles
+	 */
 	public List&lt;Vehicle&gt; select(Predicate&lt;Vehicle&gt; criterion) {
-<span class="fc" id="L43">		return vehicles.stream().filter(criterion).toList();</span>
+<span class="fc" id="L76">		return vehicles.stream().filter(criterion).toList();</span>
 	}
 
+	/**
+	 * Show the rental agency's vehicle matching the filter criterion
+	 */
 	public void printSelectedVehicles(Predicate&lt;Vehicle&gt; criterion) {
-<span class="fc bfc" id="L47" title="All 2 branches covered.">		for (Vehicle vehicle : select(criterion))</span>
-<span class="fc" id="L48">			System.out.println(vehicle);</span>
-<span class="fc" id="L49">	}</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">		for (Vehicle vehicle : select(criterion))</span>
+<span class="fc" id="L84">			System.out.println(vehicle);</span>
+<span class="fc" id="L85">	}</span>
 
+	/**
+	 * Rent a vehicle existing on the rental agency to a customer
+	 * 
+	 * @param customer the customer renter
+	 * @param vehicle  the vehicle rented
+	 * @return the daily rental price
+	 * @throws UnknownVehicleException if the vehicle is not existing on the rental
+	 *                                 agency
+	 * @throws IllegalStateException   if the vehicle is already rented or if the
+	 *                                 customer is already renting an another
+	 *                                 vehicle
+	 */
 	public double rentVehicle(Customer customer, Vehicle vehicle)
 			throws UnknownVehicleException, IllegalStateException {
-<span class="fc bfc" id="L53" title="All 2 branches covered.">		if (!vehicles.contains(vehicle))</span>
-<span class="fc" id="L54">			throw new UnknownVehicleException(vehicle);</span>
-<span class="fc bfc" id="L55" title="All 2 branches covered.">		if (aVehicleIsRentedBy(customer))</span>
-<span class="fc" id="L56">			throw new IllegalStateException(customer + &quot; is already renting &quot; + rentedVehicles.get(customer) + &quot;.&quot;);</span>
-<span class="fc bfc" id="L57" title="All 2 branches covered.">		if (vehicleIsRented(vehicle))</span>
-<span class="fc" id="L58">			throw new IllegalStateException(vehicle + &quot; is already rented by &quot; + getRenterOf(vehicle) + &quot;.&quot;);</span>
+<span class="fc bfc" id="L101" title="All 2 branches covered.">		if (!vehicles.contains(vehicle))</span>
+<span class="fc" id="L102">			throw new UnknownVehicleException(vehicle);</span>
+<span class="fc bfc" id="L103" title="All 2 branches covered.">		if (aVehicleIsRentedBy(customer))</span>
+<span class="fc" id="L104">			throw new IllegalStateException(customer + &quot; is already renting &quot; + rentedVehicles.get(customer) + &quot;.&quot;);</span>
+<span class="fc bfc" id="L105" title="All 2 branches covered.">		if (vehicleIsRented(vehicle))</span>
+<span class="fc" id="L106">			throw new IllegalStateException(vehicle + &quot; is already rented by &quot; + getRenterOf(vehicle) + &quot;.&quot;);</span>
 
-<span class="fc" id="L60">		rentedVehicles.put(customer, vehicle);</span>
-<span class="fc" id="L61">		return vehicle.dailyRentalPrice();</span>
+<span class="fc" id="L108">		rentedVehicles.put(customer, vehicle);</span>
+<span class="fc" id="L109">		return vehicle.dailyRentalPrice();</span>
 	}
 
 	private Customer getRenterOf(Vehicle vehicle) {
-<span class="fc" id="L65">		return rentedVehicles.entrySet().stream().filter(entry -&gt; Objects.equals(entry.getValue(), vehicle))</span>
-<span class="fc" id="L66">				.map(Map.Entry::getKey).findFirst().orElse(null);</span>
+<span class="fc" id="L113">		return rentedVehicles.entrySet().stream().filter(entry -&gt; Objects.equals(entry.getValue(), vehicle))</span>
+<span class="fc" id="L114">				.map(Map.Entry::getKey).findFirst().orElse(null);</span>
 	}
 
+	/**
+	 * 
+	 * @param customer
+	 * @return true only if the customer is currently renting a vehicle
+	 */
 	public boolean aVehicleIsRentedBy(Customer customer) {
-<span class="fc" id="L70">		return rentedVehicles.containsKey(customer);</span>
+<span class="fc" id="L123">		return rentedVehicles.containsKey(customer);</span>
 	}
 
+	/**
+	 * 
+	 * @param vehicle
+	 * @return true only if the vehicle is currently rented
+	 */
 	public boolean vehicleIsRented(Vehicle vehicle) {
-<span class="fc" id="L74">		return rentedVehicles.containsValue(vehicle);</span>
+<span class="fc" id="L132">		return rentedVehicles.containsValue(vehicle);</span>
 	}
 
 	public void returnVehicle(Customer customer) {
-<span class="fc" id="L78">		rentedVehicles.remove(customer);</span>
-<span class="fc" id="L79">	}</span>
+<span class="fc" id="L136">		rentedVehicles.remove(customer);</span>
+<span class="fc" id="L137">	}</span>
 
+	/**
+	 * 
+	 * @return the collection of the rental agency's rented vehicles
+	 */
 	public Collection&lt;Vehicle&gt; allRentedVehicles() {
-<span class="fc" id="L82">		return rentedVehicles.values();</span>
+<span class="fc" id="L144">		return rentedVehicles.values();</span>
 	}
 
 }

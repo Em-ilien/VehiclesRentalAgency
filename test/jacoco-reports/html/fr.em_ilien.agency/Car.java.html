@@ -9,32 +9,45 @@ public class Car extends AbstractVehicle implements Vehicle {
 
 	private int numberOfSeats;
 
+	/**
+	 * Create a new car
+	 * 
+	 * @param brand          the brand of the car
+	 * @param model          the model of the car
+	 * @param productionYear the production year of the car
+	 * @param numberOfSeats  the number of seats included on the car
+	 */
 	public Car(String brand, String model, int productionYear, int numberOfSeats) {
-<span class="fc" id="L13">		super(brand, model, productionYear);</span>
-<span class="fc" id="L14">		checkFilledNumberOfSeatIsCorrect(numberOfSeats);</span>
+<span class="fc" id="L21">		super(brand, model, productionYear);</span>
+<span class="fc" id="L22">		checkFilledNumberOfSeatIsCorrect(numberOfSeats);</span>
 
-<span class="fc" id="L16">		this.numberOfSeats = numberOfSeats;</span>
-<span class="fc" id="L17">	}</span>
+<span class="fc" id="L24">		this.numberOfSeats = numberOfSeats;</span>
+<span class="fc" id="L25">	}</span>
 
 	private void checkFilledNumberOfSeatIsCorrect(int numberOfSeats) {
-<span class="fc bfc" id="L20" title="All 2 branches covered.">		if (numberOfSeats &lt; MINIMAL_NUMBER_OF_SEATS)</span>
-<span class="fc" id="L21">			throw new IllegalArgumentException(&quot;The number of seats &quot; + numberOfSeats + &quot; isn't greater than or equal to &quot;</span>
-					+ MINIMAL_NUMBER_OF_SEATS + &quot;.&quot;);
-<span class="fc" id="L23">	}</span>
+<span class="fc bfc" id="L28" title="All 2 branches covered.">		if (numberOfSeats &lt; MINIMAL_NUMBER_OF_SEATS)</span>
+<span class="fc" id="L29">			throw new IllegalArgumentException(&quot;The number of seats &quot; + numberOfSeats</span>
+					+ &quot; isn't greater than or equal to &quot; + MINIMAL_NUMBER_OF_SEATS + &quot;.&quot;);
+<span class="fc" id="L31">	}</span>
 
+	/**
+	 * 
+	 * @return true if the car age is less than 5 years
+	 */
 	public boolean isNew() {
-<span class="fc bfc" id="L26" title="All 2 branches covered.">		return TimeProvider.currentYearValue() - productionYear &lt; MAX_CAR_AGE_STILL_CONSIDERED_NEW;</span>
+<span class="fc bfc" id="L38" title="All 2 branches covered.">		return TimeProvider.currentYearValue() - productionYear &lt; MAX_CAR_AGE_STILL_CONSIDERED_NEW;</span>
 	}
 
+	@Override
 	public double dailyRentalPrice() {
-<span class="fc" id="L30">		int price = PRICE_PER_SEAT * numberOfSeats;</span>
-<span class="pc bpc" id="L31" title="1 of 2 branches missed.">		if (isNew())</span>
-<span class="fc" id="L32">			return price * 2;</span>
-<span class="nc" id="L33">		return price;</span>
+<span class="fc" id="L43">		int price = PRICE_PER_SEAT * numberOfSeats;</span>
+<span class="fc bfc" id="L44" title="All 2 branches covered.">		if (isNew())</span>
+<span class="fc" id="L45">			return price * 2;</span>
+<span class="fc" id="L46">		return price;</span>
 	}
 
 	protected String toStringDetails() {
-<span class="fc" id="L37">		return numberOfSeats + &quot; seats&quot;;</span>
+<span class="fc" id="L50">		return numberOfSeats + &quot; seats&quot;;</span>
 	}
 
 }
